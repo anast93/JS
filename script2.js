@@ -14,3 +14,4 @@ var  reg1 = new RegExp('abc'); // определение шаблона с по�
 console.log(reg1.test('abcd')); // проверка. Результат - true.
 console.log(reg1.test('qwwertyabc')); // true
 console.log(reg1.test('qwwerty')); // false
+*/
