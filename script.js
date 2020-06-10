@@ -93,16 +93,16 @@ let getTargetMonth = function(target, sumAmmounts) {
 
 getTargetMonth(mission, accumulatedMonth);
 
-let geetStatusIncome = function(getBudgetDay) {
-    if (getBudgetDay > 1200) {
+let getStatusIncome = function(dailyBudget) {
+    if (dailyBudget > 1200) {
         return ( 'У вас высокий уровень дохода!' );
-    } else if (getBudgetDay > 600) {
+    } else if (dailyBudget > 600) {
         return ( 'У вас средний уровень дохода.');
-    } else if (getBudgetDay >= 0) {
+    } else if (dailyBudget >= 0) {
         return ('К сожалению, у вас уровень дохода ниже среднего.');
     } else {
         return ( 'Ваши расходы превышают доходы.' );
     }
 };
 
-console.log( geetStatusIncome(budgetDay) );
+console.log( getStatusIncome(budgetDay) );
