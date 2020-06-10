@@ -69,8 +69,8 @@ let str = addExpenses.toLowerCase();
 console.log( str.split(',') );
 
 // Считает накопления за месяц: доходы - обяз.расходы.
-let getAccumulatedMonth = function(getMoney, getExpensesAmount) {
-    return getMoney - getExpensesAmount;
+let getAccumulatedMonth = function(capital, sumAmmounts) {
+    return capital - sumAmmounts;
 };
 
 const accumulatedMonth = getAccumulatedMonth(money, expensesAmount); 
@@ -81,8 +81,8 @@ console.log( `Бюджет на день: ${budgetDay} рублей.` );
 
 
 // Считает период, за который будет достигнута цель
-let getTargetMonth = function(getMission, getAccumulation) {
-    let time = Math.ceil(getMission/getAccumulation);
+let getTargetMonth = function(target, sumAmmounts) {
+    let time = Math.ceil(target/sumAmmounts);
     
     if (time <= 0) {
         return console.log( 'Цель не будет достигнута.' ) ;
