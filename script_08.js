@@ -8,7 +8,7 @@ let isNumber = function(testNumber) {
 
 
 let isStr = function(testStr) {
-    return /^[a-zа-я,]*$/gi.test(testStr);
+    return !(/^[a-zа-я,\s]*$/gi.test(testStr)) || (/^,+/.test(testStr)) || (/^\s*$/.test(testStr));
 };
 
 let start = function() {
@@ -46,7 +46,7 @@ let appData = {
         if(confirm('Есть ли у вас дополнительный заработок?')) {
 
             itemIncome = prompt('Какой у вас есть дополнительный заработок?', 'фриланс');
-            while(!isStr(itemIncome)) {
+            while(isStr(itemIncome)) {
                  itemIncome = prompt('Какой у вас есть дополнительный заработок?', 'фриланс');
             }
             while(!isNumber(cashIncome)) {
@@ -62,7 +62,7 @@ let appData = {
         let exp;
         let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую без пробелов.', 'Питание,проезд');
 
-        while(!isStr(addExpenses)) {
+        while(isStr(addExpenses)) {
         addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую без пробелов.', 'Питание,проезд');
         }
 
@@ -75,7 +75,7 @@ let appData = {
         for (let i = 0; i < 2; i++ ) {
             exp = prompt('Введите обязательную статью расходов.', 'Интернет');  
             
-            while(!isStr(exp)) {
+            while(isStr(exp)) {
                 exp = prompt('Введите обязательную статью расходов.', 'Интернет'); 
             }
 
