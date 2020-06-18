@@ -53,17 +53,18 @@ const outputResTargetMonth = document.getElementsByClassName('target_month-value
 const inputSalaryAmount = document.querySelector('.salary-amount');
 //console.log(inputSalaryAmount);
 
-// Наименование доп. дохода (user)
-const inputIncomeItem = document.querySelector('.income-title-item');
+// Наименование доп. дохода (user) !!!!!!!!!!!!!!!!!!!!!!!!!
+const inputIncomeItem = document.querySelector('input.income-title');
 //console.log(inputIncomeItem);
+
 
 // Сумма доп. дохода (user)
 const inputIncomeAmount = document.querySelector('.income-amount');
 //console.log(inputIncomeAmount);
 
-//Наименование обязательного расхода (user)
-const inputExpensesItem = document.querySelector('.expenses-title-item');
-//console.log(inputExpensesTitle);
+//Наименование обязательного расхода (user) !!!!!!!!!!!!!!!!!!!!!!!!!!
+const inputExpensesItem = document.querySelector('input.expenses-title');
+//console.log(inputExpensesItem);
 
 //Сумма обязательного расхода (user)
 const inputExpensesAmount = document.querySelector('.expenses-amount');
