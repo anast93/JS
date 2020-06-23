@@ -59,8 +59,6 @@ let start =  document.getElementById('start'),
 // Кнока "Сбросить"
     cancel = document.getElementById('cancel');
     
-    let main = document.querySelector('.main');
-    
     let inputText = document.querySelectorAll("input[type='text']");
 
     cancel.setAttribute("disabled", "disabled");
@@ -87,12 +85,14 @@ let appData = {
     expensesMonth: 0,
     incomeMonth: 0,
     start: function() {
-        
+
         this.budget =  + salaryAmount.value;
         console.log('Месячный доход: ',salaryAmount.value);
         
         //проверка контекста функции start()
         //console.log(this);
+
+        console.log(this);
 
         this.getExpenses();
         this.getIncome();
@@ -103,17 +103,12 @@ let appData = {
         //this.getStatusIncome();
         this.showResult();    
     },
-    // привязка контекста ф-ии start() к объекту appData
-    newStart: function() {
-        this.start = this.start.bind(appData); 
-        
-    },
     
     // Ф-я проверяет поле с Месячным доходом(salaryAmount) на наличие значения.
     // Если значение != пустой строке, то атрибут "disabled" удаляется
     // Запускается при событии change на поле salaryAmount
     check: function() {
-        if(salaryAmount.value!== '') {
+        if(salaryAmount.value !== '') {
             start.removeAttribute("disabled");
         }  else {
             start.setAttribute("disabled",  "disabled");
@@ -179,6 +174,8 @@ let appData = {
                 item.value = '';
             }
         });
+
+        start.setAttribute("disabled", "disabled");
 
     },
 
@@ -304,9 +301,7 @@ let appData = {
     }
 };
 
-
-appData.newStart();
-start.addEventListener('click',  appData.start);
+start.addEventListener('click',  appData.start.bind(appData));
 start.addEventListener('click', appData.completePrgm);
 expensesPlus.addEventListener('click',  appData.addExpensesBlock);
 incomePlus.addEventListener('click',  appData.addIncomeBlock);
