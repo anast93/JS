@@ -82,27 +82,32 @@ class AppData {
     this.incomeMonth = 0;
     }
 
-    check() {
-        salaryAmount.value = salaryAmount.value.trim();
-        if(salaryAmount.value !== '' && this.isNumber(salaryAmount.value)) {
-            start.removeAttribute("disabled");
-        } else {
-            alert('Используйте только цифры для ввода месячного дохода.');
-        }
-    }
-
     isNumber(testNumber) {
         return !isNaN( parseFloat(testNumber) )  &&  isFinite(testNumber);
     }
 
     start() {
 
+        salaryAmount.value = salaryAmount.value.trim();
+
+        if (salaryAmount.value === '' || !this.isNumber(salaryAmount.value)) {
+            alert('Используйте только цифры для ввода месячного дохода.');
+            start.setAttribute("disabled", true);
+            return;
+        }
+
+        if (this.deposit === true) {
+            if ( (!this.isNumber(depositPercent.value)) || (parseFloat(depositPercent.value) < 0) || (parseFloat(depositPercent.value) > 100)) {
+                start.setAttribute('disabled', true);
+                alert('Процент должен быть числом от 1 до 100.');
+                return;
+            }
+        }
+         
+
         this.budget =  + salaryAmount.value;
         console.log('Месячный доход: ',salaryAmount.value);
         
-        //проверка контекста функции start()
-        //console.log(this);
-    
         this.getExpenses();
         this.getIncome();
         this.getExpensesMonth();   
@@ -115,10 +120,25 @@ class AppData {
     }
 
     completePrgm() {
+
+        salaryAmount.value = salaryAmount.value.trim();
+
+        if (salaryAmount.value === '' || !this.isNumber(salaryAmount.value)) {
+            start.setAttribute("disabled", true);
+            return;
+        }
+
+        if (this.deposit === true) {
+            if ( (!this.isNumber(depositPercent.value)) || (parseFloat(depositPercent.value) < 0) || (parseFloat(depositPercent.value) > 100)) {
+                start.setAttribute('disabled', true);
+                return;
+            }
+        }
+
+
         start.setAttribute("disabled", "disabled");
         start.style.display = 'none';
     
-        //periodSelect.setAttribute("disabled", "disabled");
         incomePlus.setAttribute("disabled", "disabled");
         expensesPlus.setAttribute("disabled", "disabled");
     
@@ -301,7 +321,7 @@ class AppData {
         
         for( let key in this.expenses) {
     
-            sum +=  this.expenses[key]
+            sum +=  this.expenses[key];
             this.expensesMonth = sum;
         }
         return sum;
@@ -360,16 +380,6 @@ class AppData {
         }
     }
 
-    checkPercent() {
-        if ( (!this.isNumber(depositPercent.value)) || (parseFloat(depositPercent.value) <0) || (parseFloat(depositPercent.value) > 100)) {
-                alert('Введите число от 1 до 100.');
-                start.setAttribute('disabled', true);
-                return;
-        } else {
-            start.removeAttribute('disabled');
-        } return depositPercent.value;
-    }
-
     depositHandler() {
         if (depositCheck.checked) {
             depositBank.style.display = 'inline-block';
@@ -388,24 +398,42 @@ class AppData {
     }
 
     eventsListeners() {
+        const _this = this;
+
         start.addEventListener('click',  this.start.bind(this));
-        start.addEventListener('click', this.completePrgm);
+        start.addEventListener('click', this.completePrgm.bind(this));
         expensesPlus.addEventListener('click',  this.addExpensesBlock);
         incomePlus.addEventListener('click',  this.addIncomeBlock);
         periodSelect.addEventListener('change',  this.getPeriod);
         periodSelect.addEventListener('click', this.calcPeriod.bind(this));
-        salaryAmount.addEventListener('change',  this.check.bind(this));
+        salaryAmount.addEventListener('input',  function() {
+            
+                salaryAmount.value = salaryAmount.value.trim();
+                if(salaryAmount.value !== '' && _this.isNumber(salaryAmount.value)) {
+                    start.removeAttribute("disabled");
+                } else {
+                    alert('Используйте только цифры для ввода месячного дохода.');
+                    start.setAttribute("disabled", true);
+                }
+            
+        });
         cancel.addEventListener('click', this.reset.bind(this));
         depositCheck.addEventListener('change', this.depositHandler.bind(this));
-        depositPercent.addEventListener('change', this.checkPercent.bind(this));
- 
-        console.log(this);
-        
+        depositPercent.addEventListener('input', function() {
+            if ( (!_this.isNumber(depositPercent.value)) || (parseFloat(depositPercent.value) <0) || (parseFloat(depositPercent.value) > 100)) {
+                start.setAttribute('disabled', true);
+                alert('Процент должен быть числом от 1 до 100.');
+        } else {
+            start.removeAttribute('disabled');
+        }
+        });
+      
     }
 }
  
 const appData = new AppData();
 appData.eventsListeners();
+
 
 
 
